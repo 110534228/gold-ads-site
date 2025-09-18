@@ -52,7 +52,40 @@
     .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:20px}
     .gallery img{width:100%;border-radius:12px;border:1px solid rgba(0,0,0,.1);object-fit:cover}
     .footer{padding:24px 0;color:#fff;background:linear-gradient(140deg,var(--green), #06231b)}
+    /* 相簿容器 */
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+  gap:14px;
+}
+
+/* 相片項目 */
+.gallery .item{
+  position:relative;
+  overflow:hidden;
+  border-radius:10px;
+  border:1px solid rgba(0,0,0,.1);
+}
+
+/* 各種比例 */
+.gallery .item.square{ aspect-ratio: 1 / 1; }   /* 正方形：預設 */
+.gallery .item.tall  { aspect-ratio: 3 / 4; }   /* 直向長條 */
+.gallery .item.wide  { aspect-ratio:16 / 9; }   /* 橫向長條（可選） */
+
+/* 圖片填滿裁切 */
+.gallery .item img{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:cover; display:block;
+}
+
+/* 小螢幕維持好看 */
+@media (max-width:640px){
+  .gallery{ grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); }
+}
+
   </style>
+  
 </head>
 <body>
   <header>
@@ -89,6 +122,8 @@
 
     <!-- 新增的圖片展示區 -->
     <section id="gallery">
+      <figure class="item tall"><img src="5.jpg" alt="回收設備A（直向）" loading="lazy"></figure>
+      <figure class="item tall"><img src="6.jpg" alt="回收設備B（直向）" loading="lazy"></figure>
   <div class="container">
     <div class="section-title"><span class="bar"></span><h2>實際回收樣品</h2></div>
     <div class="gallery">
@@ -100,14 +135,14 @@
       <img src="S__461840395_0.jpg" alt="回收樣品6" loading="lazy">
       <img src="S__461840396_0.jpg" alt="回收樣品7" loading="lazy">
       <img src="S__461840397_0.jpg" alt="回收樣品8" loading="lazy">
-      <img src="1.jpg" alt="回收樣品8" loading="lazy">
-      <img src="2.jpg" alt="回收樣品8" loading="lazy">
-      <img src="3.jpg" alt="回收樣品8" loading="lazy">
-      <img src="4.jpg" alt="回收樣品8" loading="lazy">
-      <img src="5.jpg" alt="回收樣品8" loading="lazy">
-      <img src="6.jpg" alt="回收樣品8" loading="lazy">
-      <img src="7.jpg" alt="回收樣品8" loading="lazy">
-      <img src="8.jpg" alt="回收樣品8" loading="lazy">
+      <img src="1.jpg" alt="回收樣品9" loading="lazy">
+      <img src="2.jpg" alt="回收樣品10" loading="lazy">
+      <img src="3.jpg" alt="回收樣品11" loading="lazy">
+      <img src="4.jpg" alt="回收樣品12" loading="lazy">
+      <img src="5.jpg" alt="回收樣品13" loading="lazy">
+      <img src="6.jpg" alt="回收樣品14" loading="lazy">
+      <img src="7.jpg" alt="回收樣品15" loading="lazy">
+      <img src="8.jpg" alt="回收樣品16" loading="lazy">
     </div>
   </div>
 </section>
@@ -130,6 +165,7 @@
   </footer>
 </body>
 </html>
+
 
 
 
