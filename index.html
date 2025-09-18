@@ -12,26 +12,12 @@
   <meta property="og:locale" content="zh_TW" />
   <meta name="theme-color" content="#0b3b2e" />
   <style>
-  .gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 14px;
-  }
-  .gallery img {
-    width: 100%;
-    height: 250px;       /* 固定高度 (正方形) */
-    aspect-ratio: 1 / 1; /* 強制正方形 */
-    object-fit: cover;   /* 裁切圖片填滿 */
-    border-radius: 10px; /* 圓角，可移除 */
-    display: block;
-  }
-</style>
-  <style>
     :root{--green:#0b3b2e;--gold:#c2a25f;--ink:#1d1d1f;--muted:#6b7280;--paper:#f7f6f3}
     *{box-sizing:border-box}
     html,body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans TC","PingFang TC","Microsoft JhengHei","Helvetica Neue",Arial,sans-serif;color:var(--ink);background:var(--paper)}
+    img{max-width:100%;display:block}
     .container{max-width:1100px;margin:0 auto;padding:0 20px}
-    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 1.25rem;border-radius:14px;background:var(--green);color:#fff;font-weight:700;letter-spacing:.02em;box-shadow:0 6px 16px rgba(11,59,46,.25);text-decoration:none}
+    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 1.25rem;border-radius:14px;background:var(--green);color:#fff;font-weight:700;letter-spacing:.02em;text-decoration:none;box-shadow:0 6px 16px rgba(11,59,46,.25)}
     .btn:hover{transform:translateY(-1px)}
     .btn.gold{background:var(--gold)}
     .pill{display:inline-block;background:rgba(11,59,46,.08);color:var(--green);padding:.4rem .8rem;border-radius:999px;font-weight:600}
@@ -39,53 +25,42 @@
     .nav{display:flex;align-items:center;justify-content:space-between;padding:.8rem 0}
     .brand{display:flex;align-items:center;gap:.6rem;font-weight:800;color:var(--green)}
     .hero{padding:48px 0 32px}
-    .hero h1{font-size:clamp(28px,4vw,44px);color:var(--green)}
-    .hero p.lead{font-size:clamp(15px,2.3vw,18px);opacity:.88}
+    .hero h1{font-size:clamp(28px,4vw,44px);color:var(--green);margin:0 0 .4rem}
+    .hero p.lead{font-size:clamp(15px,2.3vw,18px);opacity:.88;margin:0 0 1rem}
     .grid{display:grid;gap:16px}
     .grid.cols-3{grid-template-columns:repeat(3,1fr)}
-    .grid.cols-2{grid-template-columns:repeat(2,1fr)}
     @media(max-width:900px){.grid.cols-3{grid-template-columns:1fr 1fr}}
-    @media(max-width:640px){.grid.cols-3,.grid.cols-2{grid-template-columns:1fr}}
+    @media(max-width:640px){.grid.cols-3{grid-template-columns:1fr}}
     .card{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:16px;padding:18px}
-    .section-title{display:flex;align-items:center;gap:.6rem;margin-bottom:14px}
+    .section-title{display:flex;align-items:center;gap:.6rem;margin:26px 0 14px}
     .section-title .bar{width:8px;height:22px;background:var(--gold);border-radius:4px}
-    .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:20px}
-    .gallery img{width:100%;border-radius:12px;border:1px solid rgba(0,0,0,.1);object-fit:cover}
+
+    /* === 相簿樣式 === */
+    .gallery{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+      gap:14px;
+      margin-top:10px;
+    }
+    .gallery .item{
+      position:relative;
+      overflow:hidden;
+      border-radius:10px;
+      border:1px solid rgba(0,0,0,.1);
+      background:#fff;
+    }
+    /* 比例：正方形 / 直向長條 / 橫向長條（備用） */
+    .gallery .item.square{ aspect-ratio: 1 / 1; }
+    .gallery .item.tall  { aspect-ratio: 3 / 4; }
+    .gallery .item.wide  { aspect-ratio:16 / 9; }
+    .gallery .item img{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit:cover;
+    }
+
     .footer{padding:24px 0;color:#fff;background:linear-gradient(140deg,var(--green), #06231b)}
-    /* 相簿容器 */
-.gallery{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
-  gap:14px;
-}
-
-/* 相片項目 */
-.gallery .item{
-  position:relative;
-  overflow:hidden;
-  border-radius:10px;
-  border:1px solid rgba(0,0,0,.1);
-}
-
-/* 各種比例 */
-.gallery .item.square{ aspect-ratio: 1 / 1; }   /* 正方形：預設 */
-.gallery .item.tall  { aspect-ratio: 3 / 4; }   /* 直向長條 */
-.gallery .item.wide  { aspect-ratio:16 / 9; }   /* 橫向長條（可選） */
-
-/* 圖片填滿裁切 */
-.gallery .item img{
-  position:absolute; inset:0;
-  width:100%; height:100%;
-  object-fit:cover; display:block;
-}
-
-/* 小螢幕維持好看 */
-@media (max-width:640px){
-  .gallery{ grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); }
-}
-
   </style>
-  
 </head>
 <body>
   <header>
@@ -95,9 +70,7 @@
         <span>鑫友貴金屬回收</span>
         <span class="pill">專業・安全・透明</span>
       </div>
-      <div>
-        <a class="btn gold" href="tel:036101785">📞 03-6101785</a>
-      </div>
+      <div><a class="btn gold" href="tel:036101785">📞 03-6101785</a></div>
     </div>
   </header>
 
@@ -120,36 +93,41 @@
       </div>
     </section>
 
-    <!-- 新增的圖片展示區 -->
+    <!-- 相簿區：5.jpg / 6.jpg 使用直向長條格式（tall） -->
     <section id="gallery">
-      <figure class="item tall"><img src="5.jpg" alt="回收設備A（直向）" loading="lazy"></figure>
-      <figure class="item tall"><img src="6.jpg" alt="回收設備B（直向）" loading="lazy"></figure>
-  <div class="container">
-    <div class="section-title"><span class="bar"></span><h2>實際回收樣品</h2></div>
-    <div class="gallery">
-      <img src="S__461840389_0.jpg" alt="回收樣品1" loading="lazy">
-      <img src="S__461840391_0.jpg" alt="回收樣品2" loading="lazy">
-      <img src="S__461840392_0.jpg" alt="回收樣品3" loading="lazy">
-      <img src="S__461840393_0.jpg" alt="回收樣品4" loading="lazy">
-      <img src="S__461840394_0.jpg" alt="回收樣品5" loading="lazy">
-      <img src="S__461840395_0.jpg" alt="回收樣品6" loading="lazy">
-      <img src="S__461840396_0.jpg" alt="回收樣品7" loading="lazy">
-      <img src="S__461840397_0.jpg" alt="回收樣品8" loading="lazy">
-      <img src="1.jpg" alt="回收樣品9" loading="lazy">
-      <img src="2.jpg" alt="回收樣品10" loading="lazy">
-      <img src="3.jpg" alt="回收樣品11" loading="lazy">
-      <img src="4.jpg" alt="回收樣品12" loading="lazy">
-      <img src="7.jpg" alt="回收樣品15" loading="lazy">
-      <img src="8.jpg" alt="回收樣品16" loading="lazy">
-    </div>
-  </div>
-</section>
+      <div class="container">
+        <div class="section-title"><span class="bar"></span><h2>實際回收樣品</h2></div>
+        <div class="gallery">
+          <!-- 正方形縮圖 -->
+          <figure class="item square"><img src="S__461840389_0.jpg" alt="回收樣品1" loading="lazy"></figure>
+          <figure class="item square"><img src="S__461840391_0.jpg" alt="回收樣品2" loading="lazy"></figure>
+          <figure class="item square"><img src="S__461840392_0.jpg" alt="回收樣品3" loading="lazy"></figure>
+          <figure class="item square"><img src="S__461840393_0.jpg" alt="回收樣品4" loading="lazy"></figure>
+          <!-- 其他正方形 -->
+          <figure class="item square"><img src="S__461840394_0.jpg" alt="回收樣品5" loading="lazy"></figure>
+          <figure class="item square"><img src="S__461840395_0.jpg" alt="回收樣品6" loading="lazy"></figure>
+          <figure class="item square"><img src="S__461840396_0.jpg" alt="回收樣品7" loading="lazy"></figure>
+          <figure class="item square"><img src="S__461840397_0.jpg" alt="回收樣品8" loading="lazy"></figure>
+          <figure class="item square"><img src="1.jpg" alt="回收樣品9" loading="lazy"></figure>
+          <figure class="item square"><img src="2.jpg" alt="回收樣品10" loading="lazy"></figure>
+          <figure class="item square"><img src="3.jpg" alt="回收樣品11" loading="lazy"></figure>
+          <figure class="item square"><img src="4.jpg" alt="回收樣品12" loading="lazy"></figure>
+          <figure class="item square"><img src="7.jpg" alt="回收樣品15" loading="lazy"></figure>
+          <figure class="item square"><img src="8.jpg" alt="回收樣品16" loading="lazy"></figure>
+          
+          <!-- 直向長條（你的新照片 5、6） -->
+          <figure class="item tall"><img src="5.jpg" alt="回收設備A（直向）" loading="lazy"></figure>
+          <figure class="item tall"><img src="6.jpg" alt="回收設備B（直向）" loading="lazy"></figure>
 
+        </div>
+      </div>
+    </section>
 
     <section id="quote">
       <div class="container">
         <div class="section-title"><span class="bar"></span><h2>快速估價</h2></div>
         <p>提供品項、重量、成色，即可先行報價。</p>
+        <a class="btn gold" href="tel:036101785">📞 撥打 03-6101785</a>
       </div>
     </section>
   </main>
@@ -163,6 +141,7 @@
   </footer>
 </body>
 </html>
+
 
 
 
